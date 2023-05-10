@@ -74,10 +74,10 @@ _validate:function(e){
 }
 };
 
-function test(){
+function tellMe(joke){
     VoiceRSS.speech({
         key: '8be13f3092c3404fbbb871da14a0a6c5',
-        src: 'Hello, world!',
+        src: joke,
         hl: 'en-us',
         v: 'Linda',
         r: 0, 
@@ -87,4 +87,27 @@ function test(){
     });
 }
 
-test();
+
+// Get jokes from joke API
+
+async function getJokes(){
+    let joke ='';
+    const apiUrl = 'https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit';
+    try{
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        if(data.setup){
+            joke = `${data.setup} ... ${data.delivery}`;
+        }else{
+            joke = data.joke;
+        }
+
+        tellMe(joke);
+
+        // toggleButton();
+    }catch(error){
+        console.log('Whoops!',error);
+    }
+}
+
+getJokes();
