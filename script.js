@@ -110,4 +110,9 @@ async function getJokes(){
     }
 }
 
-getJokes();
+function toggleButton(){
+    button.disabled = !button.disabled;
+}
+
+button.addEventListener('click',getJokes);
+audioElement.addEventListener('ended',toggleButton);
